@@ -2,12 +2,14 @@ use crate::game_state::GameState;
 
 use bevy::app::Plugin;
 
-use bevy::prelude::{App, ClearColor, Color, Msaa, NonSend, WindowDescriptor};
+use bevy::log::{Level, LogPlugin, LogSettings};
+use bevy::prelude::{info, App, ClearColor, Color, Msaa, NonSend, WindowDescriptor};
 use bevy::window::WindowId;
 use bevy::winit::WinitWindows;
 use bevy::DefaultPlugins;
 
 use super::debug_plugin::DebugPlugin;
+use super::game_plugin::GamePlugin;
 use super::loading_plugin::LoadingPlugin;
 use std::io::Cursor;
 use winit::window::Icon;
@@ -16,7 +18,21 @@ pub struct CoreClientPlugin;
 
 impl Plugin for CoreClientPlugin {
 	fn build(&self, app: &mut App) {
-		app.add_state(GameState::Loading)
+		// this code is compiled only if debug assertions are enabled (debug mode)
+		#[cfg(debug_assertions)]
+		app.insert_resource(LogSettings {
+			filter: "info,wgpu_core=warn,wgpu_hal=warn,minewars=debug".into(),
+			level: bevy::log::Level::DEBUG,
+		});
+
+		// this code is compiled only if debug assertions are disabled (release mode)
+		#[cfg(not(debug_assertions))]
+		app.insert_resource(LogSettings {
+			filter: "warn".into(),
+			level: bevy::log::Level::WARN,
+		});
+
+		app.add_state(GameState::Playing)
 			.insert_resource(Msaa { samples: 1 })
 			.insert_resource(ClearColor(Color::rgb(0.4, 0.4, 0.4)))
 			.insert_resource(WindowDescriptor {
@@ -26,9 +42,11 @@ impl Plugin for CoreClientPlugin {
 				canvas: Some("#bevy".to_owned()),
 				..Default::default()
 			})
+			.add_plugin(GamePlugin)
 			.add_plugin(LoadingPlugin)
 			.add_plugin(DebugPlugin)
 			.add_plugins(DefaultPlugins)
+			.add_system(bevy::window::close_on_esc)
 			.add_startup_system(set_window_icon);
 	}
 }
