@@ -2,7 +2,9 @@
 
 [![CI](https://github.com/AlexAegis/colony/actions/workflows/ci.yml/badge.svg)](https://github.com/AlexAegis/colony/actions/workflows/ci.yml)
 
-A game experiment using Bevy
+A game experiment using Bevy.
+
+> Try out the web version at <https://alexaegis.github.io/colony/>
 
 ## Resources
 
