@@ -5,6 +5,8 @@ use bevy::diagnostic::{
 	EntityCountDiagnosticsPlugin, FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin,
 };
 
+use super::axis_indicator_plugin::AxisIndicatorPlugin;
+
 pub struct DebugPlugin;
 
 impl Plugin for DebugPlugin {
@@ -13,7 +15,8 @@ impl Plugin for DebugPlugin {
 		{
 			_app.add_plugin(FrameTimeDiagnosticsPlugin::default())
 				.add_plugin(LogDiagnosticsPlugin::default())
-				.add_plugin(EntityCountDiagnosticsPlugin::default());
+				.add_plugin(EntityCountDiagnosticsPlugin::default())
+				.add_plugin(AxisIndicatorPlugin::default());
 		}
 	}
 }

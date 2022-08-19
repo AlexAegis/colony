@@ -87,11 +87,11 @@ fn setup_scene(
 ) {
 	info!("hello!");
 	// plane
-	commands.spawn_bundle(PbrBundle {
-		mesh: meshes.add(Mesh::from(shape::Plane { size: 5.0 })),
-		material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
-		..default()
-	});
+	// commands.spawn_bundle(PbrBundle {
+	// 	mesh: meshes.add(Mesh::from(shape::Plane { size: 5.0 })),
+	// 	material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
+	// 	..default()
+	// });
 	// player
 	player.entity = Some(
 		commands

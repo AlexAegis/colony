@@ -9,7 +9,7 @@ use bevy::winit::WinitWindows;
 use bevy::DefaultPlugins;
 
 use super::camera_plugin::CameraPlugin;
-use super::debug_plugin::DebugPlugin;
+use super::debug::debug_plugin::DebugPlugin;
 use super::game_plugin::GamePlugin;
 use super::loading_plugin::LoadingPlugin;
 #[cfg(target_family = "wasm")]
