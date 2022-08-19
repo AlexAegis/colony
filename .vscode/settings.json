@@ -2,7 +2,6 @@
   "editor.formatOnSave": true,
   "rust-analyzer.inlayHints.typeHints.enable": false,
   "rust-analyzer.cargo.features": "all",
-  "rust-analyzer.cargo.target": "wasm32-unknown-unknown",
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer"
   },

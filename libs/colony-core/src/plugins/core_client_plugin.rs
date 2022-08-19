@@ -8,6 +8,7 @@ use bevy::window::WindowId;
 use bevy::winit::WinitWindows;
 use bevy::DefaultPlugins;
 
+use super::camera_plugin::CameraPlugin;
 use super::debug_plugin::DebugPlugin;
 use super::game_plugin::GamePlugin;
 use super::loading_plugin::LoadingPlugin;
@@ -43,6 +44,7 @@ impl Plugin for CoreClientPlugin {
 				..Default::default()
 			})
 			.add_plugin(GamePlugin)
+			.add_plugin(CameraPlugin)
 			.add_plugin(LoadingPlugin)
 			.add_plugin(DebugPlugin)
 			.add_plugins(DefaultPlugins)
