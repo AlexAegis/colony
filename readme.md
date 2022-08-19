@@ -1,5 +1,7 @@
 # Colony
 
+[![CI](https://github.com/AlexAegis/colony/actions/workflows/ci.yml/badge.svg)](https://github.com/AlexAegis/colony/actions/workflows/ci.yml)
+
 A game experiment using Bevy
 
 ## Resources
@@ -7,6 +9,7 @@ A game experiment using Bevy
 - <https://bevyengine.org/learn/book/getting-started/setup/>
 - <https://github.com/Anshorei/awesome-bevy>
 - <https://rust-lang.github.io/mdBook/format/summary.html>
+- <https://bfnightly.bracketproductions.com/chapter_33.html>
 
 ## Requirements
 
