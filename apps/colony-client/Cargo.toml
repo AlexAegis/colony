@@ -10,3 +10,6 @@ dev = [
 
 [dependencies]
 colony-core = { path = "../../libs/colony-core" }
+
+[build-dependencies]
+embed-resource = "1.4"

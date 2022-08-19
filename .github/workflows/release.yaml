@@ -21,9 +21,6 @@ jobs:
         uses: dawidd6/action-get-tag@v1
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Remove build script
-        run: |
-          rm build.rs
       - name: Install rust toolchain for Apple Silicon
         uses: actions-rs/toolchain@v1
         with:
@@ -160,21 +157,23 @@ jobs:
           rustup target add wasm32-unknown-unknown
       - name: Build Release
         run: |
-          cd apps/colony-client && trunk build
+          mkdir -p target/web
+          cd apps/colony-client
+          trunk build --dist "../../target/web"
       - name: optimize Wasm
         uses: NiklasEi/wasm-opt-action@v2
         with:
-          file: dist/*.wasm
+          file: target/web/*.wasm
         # Trunk cannot import assets from relative paths (see e.g. https://github.com/thedodd/trunk/issues/395)
         # On sites like itch.io, we don't know on wich base path the game gets served, so we need to rewrite all links to be relative
       - name: Make paths relative
         run: |
-          sed -i 's/\/index/.\/index/g' dist/index.html
-          sed -i 's/\/${{ env.GAME_EXECUTABLE_NAME }}/.\/${{ env.GAME_EXECUTABLE_NAME }}/g' dist/index.html
+          sed -i 's/\/index/.\/index/g' target/web/index.html
+          sed -i 's/\/${{ env.GAME_EXECUTABLE_NAME }}/.\/${{ env.GAME_EXECUTABLE_NAME }}/g' target/web/index.html
       - name: Zip release
         uses: vimtor/action-zip@v1
         with:
-          files: dist/
+          files: target/web/
           dest: ${{ env.GAME_EXECUTABLE_NAME }}_web.zip
       - name: Upload release
         uses: svenstaro/upload-release-action@v2
