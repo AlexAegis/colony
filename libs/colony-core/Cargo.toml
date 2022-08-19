@@ -12,3 +12,6 @@ bevy_kira_audio = { version = "0.12.0" }
 bevy_asset_loader = { version = "0.12.0" }
 winit = { version = "0.26.1", default-features = false }
 image = { version = "0.24.3", default-features = false }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+bevy_web_fullscreen = { git = "https://github.com/ostwilkens/bevy_web_fullscreen" }

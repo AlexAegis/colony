@@ -2,8 +2,8 @@ use crate::game_state::GameState;
 
 use bevy::app::Plugin;
 
-use bevy::log::{Level, LogPlugin, LogSettings};
-use bevy::prelude::{info, App, ClearColor, Color, Msaa, NonSend, WindowDescriptor};
+use bevy::log::LogSettings;
+use bevy::prelude::{App, ClearColor, Color, Msaa, NonSend, WindowDescriptor};
 use bevy::window::WindowId;
 use bevy::winit::WinitWindows;
 use bevy::DefaultPlugins;
@@ -12,6 +12,8 @@ use super::camera_plugin::CameraPlugin;
 use super::debug_plugin::DebugPlugin;
 use super::game_plugin::GamePlugin;
 use super::loading_plugin::LoadingPlugin;
+#[cfg(target_family = "wasm")]
+use bevy_web_fullscreen::FullViewportPlugin;
 use std::io::Cursor;
 use winit::window::Icon;
 
@@ -32,6 +34,9 @@ impl Plugin for CoreClientPlugin {
 			filter: "warn".into(),
 			level: bevy::log::Level::WARN,
 		});
+
+		#[cfg(target_family = "wasm")]
+		app.add_plugin(FullViewportPlugin);
 
 		app.add_state(GameState::Playing)
 			.insert_resource(Msaa { samples: 1 })

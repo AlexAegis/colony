@@ -1,8 +1,6 @@
 use bevy::app::App;
 use bevy::app::Plugin;
 use bevy::prelude::*;
-use bevy::render::camera::Projection;
-use bevy::render::camera::ScalingMode;
 
 use crate::game_state::GameState;
 
@@ -30,7 +28,6 @@ impl Plugin for GamePlugin {
 
 // control the game character
 fn move_player(
-	mut commands: Commands,
 	keyboard_input: Res<Input<KeyCode>>,
 	mut player: ResMut<Player>,
 	mut transforms: Query<&mut Transform>,

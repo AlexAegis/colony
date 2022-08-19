@@ -7,3 +7,45 @@ A game experiment using Bevy
 - <https://bevyengine.org/learn/book/getting-started/setup/>
 - <https://github.com/Anshorei/awesome-bevy>
 - <https://rust-lang.github.io/mdBook/format/summary.html>
+
+## Requirements
+
+- [Latest Rust Stable](https://rustup.rs/)
+- wasm32-unknown-uwknown compilation target
+
+  > For web target
+
+  ```sh
+  rustup target add wasm32-unknown-unknown
+  ```
+
+- [Trunk](https://trunkrs.dev/)
+
+  > For web target
+
+  ```sh
+  cargo install --locked trunk
+  ```
+
+## Usage
+
+Running the default game
+
+```sh
+cargo run
+```
+
+Developing web assets
+
+```sh
+cd ./apps/colony-client/
+trunk serve
+```
+
+Building for the web (When served from the root of the repo, for example when
+using [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer))
+
+```sh
+cd ./apps/colony-client/
+trunk build --public-url target/web/
+```

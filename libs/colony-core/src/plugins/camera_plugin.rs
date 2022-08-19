@@ -1,5 +1,3 @@
-use std::default;
-
 use bevy::app::App;
 use bevy::app::Plugin;
 use bevy::prelude::*;
@@ -56,7 +54,7 @@ fn focus_camera(
 }
 
 /// set up a simple 3D scene
-fn setup_camera(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>) {
+fn setup_camera(mut commands: Commands) {
 	// camera
 	commands
 		.spawn_bundle(Camera3dBundle {

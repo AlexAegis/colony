@@ -8,10 +8,10 @@ use bevy::diagnostic::{
 pub struct DebugPlugin;
 
 impl Plugin for DebugPlugin {
-	fn build(&self, app: &mut App) {
+	fn build(&self, _app: &mut App) {
 		#[cfg(debug_assertions)]
 		{
-			app.add_plugin(FrameTimeDiagnosticsPlugin::default())
+			_app.add_plugin(FrameTimeDiagnosticsPlugin::default())
 				.add_plugin(LogDiagnosticsPlugin::default())
 				.add_plugin(EntityCountDiagnosticsPlugin::default());
 		}
