@@ -15,6 +15,26 @@ A game experiment using [Bevy](https://bevyengine.org/).
 
 ## Requirements
 
+- [Git LFS](https://git-lfs.github.com/)
+
+  > To store `*.blend` blender projects, `*.glb` scenes and other large
+  > files
+
+  Installing:
+
+  ```sh
+  git lfs install
+  ```
+
+  Adding new filetypes to use under LFS:
+
+  ```sh
+  git lfs track "*.psd"
+  ```
+
+  Already tracked files can be checked in the
+  [`.gitattributes`](./.gitattributes) file
+
 - [Latest Rust Stable](https://rustup.rs/)
 - wasm32-unknown-uwknown compilation target
 

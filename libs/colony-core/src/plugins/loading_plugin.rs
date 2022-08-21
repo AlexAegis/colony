@@ -10,7 +10,9 @@ pub struct LoadingPlugin;
 impl Plugin for LoadingPlugin {
 	fn build(&self, app: &mut App) {
 		app.add_loading_state(
-			LoadingState::new(GameState::Loading).continue_to_state(GameState::Playing),
+			LoadingState::new(GameState::Loading)
+				.with_collection::<PlayerModelAssets>()
+				.continue_to_state(GameState::Playing),
 		);
 	}
 }
@@ -20,6 +22,18 @@ impl Plugin for LoadingPlugin {
 
 #[derive(AssetCollection)]
 pub struct FontAssets {
-	#[asset(path = "fonts/FiraSans-Bold.ttf")]
+	#[asset(path = "../../../assets/fonts/FiraSans-Bold.ttf")]
 	pub fira_sans: Handle<Font>,
+}
+
+#[derive(AssetCollection)]
+pub struct PlayerModelAssets {
+	#[asset(path = "../../../assets/models/simple_character.glb#Scene0")]
+	pub character_model: Handle<Scene>,
+	#[asset(path = "../../../assets/models/simple_character.glb#Animation0")]
+	pub idle: Handle<AnimationClip>,
+	#[asset(path = "../../../assets/models/simple_character.glb#Animation1")]
+	pub running: Handle<AnimationClip>,
+	#[asset(path = "../../../assets/models/simple_character.glb#Animation2")]
+	pub idle_to_running: Handle<AnimationClip>,
 }

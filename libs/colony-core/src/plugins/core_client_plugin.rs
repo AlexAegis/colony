@@ -12,6 +12,7 @@ use super::camera_plugin::CameraPlugin;
 use super::debug::debug_plugin::DebugPlugin;
 use super::game_plugin::GamePlugin;
 use super::loading_plugin::LoadingPlugin;
+use super::physics_plugin::PhysicsPlugin;
 #[cfg(target_family = "wasm")]
 use bevy_web_fullscreen::FullViewportPlugin;
 use std::io::Cursor;
@@ -39,7 +40,7 @@ impl Plugin for CoreClientPlugin {
 		app.add_plugin(FullViewportPlugin);
 
 		app.add_state(GameState::Playing)
-			.insert_resource(Msaa { samples: 1 })
+			.insert_resource(Msaa { samples: 4 })
 			.insert_resource(ClearColor(Color::rgb(0.4, 0.4, 0.4)))
 			.insert_resource(WindowDescriptor {
 				width: 1280.,
@@ -48,9 +49,9 @@ impl Plugin for CoreClientPlugin {
 				canvas: Some("#bevy".to_owned()),
 				..Default::default()
 			})
+			.add_plugin(LoadingPlugin)
 			.add_plugin(GamePlugin)
 			.add_plugin(CameraPlugin)
-			.add_plugin(LoadingPlugin)
 			.add_plugin(DebugPlugin)
 			.add_plugins(DefaultPlugins)
 			.add_system(bevy::window::close_on_esc)

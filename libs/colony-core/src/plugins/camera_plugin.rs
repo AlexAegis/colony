@@ -26,17 +26,14 @@ impl Plugin for CameraPlugin {
 // change the focus of the camera
 fn focus_camera(
 	time: Res<Time>,
-	player: Res<Player>,
-	mut camera: Query<(&mut Transform, &mut CameraData)>,
-	transforms: Query<&Transform, Without<CameraData>>,
+	mut player_query: Query<&mut Transform, With<Player>>,
+	mut camera: Query<(&mut Transform, &mut CameraData), Without<Player>>,
 ) {
 	const SPEED: f32 = 2.0;
 	let (mut camera_transform, mut camera_data) = camera.get_single_mut().unwrap();
 
-	if let Some(player_entity) = player.entity {
-		if let Ok(player_transform) = transforms.get(player_entity) {
-			camera_data.camera_should_focus = player_transform.translation;
-		}
+	if let Ok(player_transform) = player_query.get_single() {
+		camera_data.camera_should_focus = player_transform.translation;
 	}
 	// calculate the camera motion based on the difference between where the camera is looking
 	// and where it should be looking; the greater the distance, the faster the motion;
@@ -49,21 +46,31 @@ fn focus_camera(
 	}
 	// look at that new camera's actual focus
 	let mut target = camera_data.camera_is_focus.clone();
-	target.y = 5.0;
+	target.y = 20.0;
+	target.x = target.x - 20.0;
 	camera_transform.translation = target;
+	camera_transform.look_at(camera_data.camera_should_focus, Vec3::Y);
 }
 
 /// set up a simple 3D scene
 fn setup_camera(mut commands: Commands) {
+	let ortographic = Projection::Orthographic(OrthographicProjection {
+		scale: 0.0125,
+		scaling_mode: ScalingMode::WindowSize,
+		near: 0.1,
+		..Default::default()
+	});
+
+	let perspective = Projection::Perspective(PerspectiveProjection {
+		near: 0.1,
+
+		..Default::default()
+	});
 	// camera
 	commands
 		.spawn_bundle(Camera3dBundle {
-			transform: Transform::from_xyz(-1.0, 5.0, 0.0).looking_at(Vec3::ZERO, Vec3::Y),
-			projection: Projection::Orthographic(OrthographicProjection {
-				scale: 0.0125,
-				scaling_mode: ScalingMode::WindowSize,
-				..Default::default()
-			}),
+			transform: Transform::from_xyz(-2.0, 200.0, 0.25).looking_at(Vec3::ZERO, Vec3::Y),
+			projection: perspective,
 			..default()
 		})
 		.insert(CameraData::default());
